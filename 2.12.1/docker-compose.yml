@@ -15,12 +15,11 @@ services:
       - "profilesconfdata:/usr/share/ocsinventory-reports/ocsreports/config/profiles"
     environment:
       OCS_DB_SERVER: ocsinventory-db
-      OCS_DB_USER: ocsuser
-      OCS_DB_PASS: ocspass
-      OCS_DB_NAME: ocsweb
       # See documentation to set up SSL for MySQL
       OCS_SSL_ENABLED: 0
       OCS_DBI_PRINT_ERROR: 0
+    env_file:
+      - ./.env
     links:
       - ocsdb
     networks:
@@ -37,11 +36,8 @@ services:
     volumes :
       - ./sql/:/docker-entrypoint-initdb.d/
       - sqldata:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD : rootpass
-      MYSQL_USER : ocsuser
-      MYSQL_PASSWORD : ocspass
-      MYSQL_DATABASE : ocsweb
+    env_file:
+      - ./.env
     networks:
       - localocs
 
